@@ -38,7 +38,7 @@ nav{
         }
     }
     .Right{
-        flex:2;
+        flex:1.5;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -62,7 +62,6 @@ nav{
             }
             @include sm{
                 display:inline;
-
             }
         }
         .menu{
@@ -70,7 +69,8 @@ nav{
             top:0;
             right: -50%;
             height: 100vh;
-            background-color: black;
+            background-color: rgba(0, 0, 0, 0.678);
+            
             color:white;
             width: 50%;
             transition:all 1s ease;
