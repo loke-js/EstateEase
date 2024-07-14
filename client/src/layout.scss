@@ -10,15 +10,15 @@
     display: flex;
     flex-direction: column;
     @include lg{
-        background-color: rgb(199, 240, 240);
+        // background-color: rgb(199, 240, 240);
         max-width: 1280px;
     }
     @include md{
-        background-color: rgb(237, 237, 176);
+        // background-color: rgb(237, 237, 176);
         max-width: 768px;
     }
     @include sm{
-        background-color: rgb(238, 172, 172);
+        // background-color: rgb(238, 172, 172);
         max-width: 640px;
     }
     .content{
