@@ -4,6 +4,16 @@
     box-sizing:border-box;
 }
 
+::-webkit-scrollbar{
+    width:7px;
+}
+::-webkit-scrollbar-thumb {
+    background: #464646; 
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background : #464646aa; 
+  }
 a{
     text-decoration:none;
     color:inherit;
