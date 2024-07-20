@@ -50,6 +50,49 @@ nav{
         a{
             padding: 12px 24px;
         }
+        .user{
+            display: flex;
+            font-weight: bold;
+            align-items: center;
+            justify-content: space-around;
+            span{
+                @include sm{
+                    display:none;
+                }
+            }
+            img{
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-right: 10px;
+            }
+
+            .Profile{
+                margin-inline: 10px;
+                background-color: #fece51;
+                position: relative;
+                border: none;
+                cursor: pointer;
+
+                @include sm{
+                    display:none;
+                }
+                .notification{
+                    position: absolute;
+                    background-color: red;
+                    color: white;
+                    border-radius: 50%;
+                    top:-8px;
+                    right:-8px;
+                    width: 26px;
+                    height: 26px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
         .register{
             background-color:#fece51;
         }
