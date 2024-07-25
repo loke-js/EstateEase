@@ -2,7 +2,7 @@ import "./profile.scss";
 import List from "../../components/list/List";
 import Chat from "../../components/chat/Chat";
 import apiRequest from "../../../../api/lib/apiRequest";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect } from "react";
 function Profile() {
@@ -19,13 +19,18 @@ function Profile() {
       console.log(error);
     }
   }
+  // const handleUpdate = ()=>{
+  //   navigate("/update");
+  // }
   return (
     <div className="profile">
       <div className="details">
         <div className="wrapper">
           <div className="title">
             <h1>User Information</h1>
-            <button>Update Profile</button>
+            <Link to="/profile/update" >
+            <button >Update Profile</button>
+            </Link>
           </div>
           <div className="info">
            <span>Avatar: <img src={ currentUser.avatar || "/noavatar.jpg"} alt="" /></span>
