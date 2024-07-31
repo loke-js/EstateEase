@@ -16,6 +16,15 @@ export const getPost = async (req, res) => {
     const post = await prisma.post.findUnique({
         where:{
             id
+        },
+        include:{
+          postDetail:true,
+          user:{
+            select:{
+              username:true,
+              avatar:true,
+            }
+          },
         }
     })
     res.status(200).json(post);
@@ -51,6 +60,7 @@ export const updatePost = async (req, res) => {
     res.status(500).json({ message: "Failed to update post" });
   }
 };
+
 export const deletePost = async (req, res) => {
   const id = req.params.id;
   const tokenUserId = req.userId;
@@ -61,14 +71,20 @@ export const deletePost = async (req, res) => {
         }
     })
     if(post.userId!==tokenUserId){
-
         return res.status(403).json({message:"not authorized"}); 
     }
+    await prisma.postDetail.delete({
+      where:{
+        postId:id,
+      }
+    });
+
     await prisma.post.delete({
         where:{
             id
         }
-    })
+    });
+    
     res.status(200).json({message:"Post deleted"});
   } catch (error) {
     console.log(error.message);

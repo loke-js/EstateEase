@@ -15,6 +15,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",
+    "react-quill": "^2.0.0",
+    "react-quill-new": "^3.2.1",
     "react-router-dom": "^6.22.3",
     "sass": "^1.77.8"
   },

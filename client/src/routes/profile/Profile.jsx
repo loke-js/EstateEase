@@ -1,7 +1,7 @@
 import "./profile.scss";
 import List from "../../components/list/List";
 import Chat from "../../components/chat/Chat";
-import apiRequest from "../../../../api/lib/apiRequest";
+import apiRequest from "../../components/lib/apiRequest";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect } from "react";
@@ -40,7 +40,9 @@ function Profile() {
           </div>
           <div className="title">
             <h1>My List</h1>
-            <button>Create New Post</button>
+            <Link to='/profile/createPost'>
+            <button >Create New Post</button>
+            </Link>
           </div>
           <List />
           <div className="title">
