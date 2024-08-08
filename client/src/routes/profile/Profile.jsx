@@ -1,7 +1,7 @@
 import "./profile.scss";
 import List from "../../components/list/List";
 import Chat from "../../components/chat/Chat";
-import apiRequest from "../../components/lib/apiRequest";
+import apiRequest from "../../lib/apiRequest";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect } from "react";

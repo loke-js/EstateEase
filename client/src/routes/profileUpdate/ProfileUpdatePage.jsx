@@ -2,7 +2,7 @@ import { useContext,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./profileUpdatePage.scss";
 import { AuthContext } from "../../context/AuthContext";
-import apiRequest from "../../components/lib/apiRequest";
+import apiRequest from "../../lib/apiRequest";
 import UploadWidget from "../../components/uploadWidget/UploadWidget";
 
 function ProfileUpdatePage() {

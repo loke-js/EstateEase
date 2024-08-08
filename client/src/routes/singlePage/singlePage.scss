@@ -5,8 +5,7 @@
     height:100%;
     @include md{
         flex-direction: column;
-        overflow: scroll;
-        
+        overflow: scroll;    
     }
     .details {
         height: 100%;
@@ -60,8 +59,11 @@
                             width: max-content;
                             font-size: 20px;
                             font-weight: 300;
-
                             border-radius: 5px;
+                            .rupee{
+                                width:15px;
+                                height: 15px;
+                            }
                         }
                     }
 

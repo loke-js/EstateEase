@@ -2,7 +2,7 @@ import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
-import apiRequest from "../../components/lib/apiRequest";
+import apiRequest from "../../lib/apiRequest";
 function Register() {
   const navigate = useNavigate();
   

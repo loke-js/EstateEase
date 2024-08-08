@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./newPostPage.scss";
 import ReactQuill from "react-quill-new";
 import "react-quill/dist/quill.snow.css";
-import apiRequest from "../../components/lib/apiRequest";
+import apiRequest from "../../lib/apiRequest";
 import UploadWidget from "../../components/uploadWidget/UploadWidget";
 import { useNavigate } from "react-router-dom";
 function NewPostPage() {
@@ -24,6 +24,7 @@ function NewPostPage() {
             bedroom:parseInt(inputs.bedroom),
             bathroom:parseInt(inputs.bathroom),
             type:inputs.type,
+            size:inputs.size,
             property:inputs.property,
             latitude:inputs.latitude,
             longitude:inputs.longitude,
