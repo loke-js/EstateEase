@@ -13,15 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  username  String   @unique
-  password  String
-  avatar    String?
-  posts Post[]
-  createdAt DateTime @default(now())
-}
+
 
 model Post {
   id String @id @default(auto()) @map("_id") @db.ObjectId
@@ -40,6 +32,7 @@ model Post {
   userId String @db.ObjectId
   user User @relation(fields: [userId],references: [id])
   postDetail PostDetail?
+  savedPosts SavedPost[]
 }
 
 enum Type{
@@ -66,4 +59,47 @@ model PostDetail{
   restaurant Int?
   post Post @relation(fields:[postId],references: [id])
   postId String @db.ObjectId @unique
+}
+
+model SavedPost {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  user User @relation(fields: [userId],references: [id])
+  post Post @relation(fields: [postId],references: [id])
+  userId String   @db.ObjectId
+  postId String   @db.ObjectId 
+  createdAt DateTime @default(now())
+  
+  @@unique([userId,postId])
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  username  String   @unique
+  password  String
+  avatar    String?
+  createdAt DateTime @default(now())
+  posts Post[]
+  savedPosts SavedPost[]
+  chats Chat[] @relation(fields: [chatIDs],references: [id])
+  chatIDs String[] @db.ObjectId
+}
+
+model Chat{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  users User[] @relation(fields: [userIDs],references: [id])
+  userIDs String[] @db.ObjectId
+  createdAt DateTime @default(now())
+  seenBy String[] @db.ObjectId
+  messages Message[]
+  lastMessage String?
+}
+model Message{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  text String
+  userId String
+  chat  Chat @relation(fields: [chatId],references: [id])
+  chatId String @db.ObjectId 
+  createdAt DateTime @default(now())
+ 
 }

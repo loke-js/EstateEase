@@ -35,7 +35,7 @@ export const listData = [
     {
       id: 4,
       title: "Great Location! Great Price! Great Apartment!",
-      img: "https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      images: "https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       bedroom: 2,
       bathroom: 1,
       price: 1000,

@@ -2,11 +2,31 @@ import Slider from "../../components/slider/Slider";
 import "./singlePage.scss";
 import { singlePostData, userData } from "../../lib/dummydata";
 import Map from "../../components/map/Map";
-import { useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import DOMpurify from "dompurify";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
 function SinglePage() {
   const post = useLoaderData();
   console.log(post);
+  const navigate = useNavigate();
+  const [saved,setSaved] =useState(post.isSaved);
+  // console.log(post);
+  const { currentUser } = useContext(AuthContext);
+  const handleSave = async () => {
+
+    if (!currentUser) {
+      navigate("/login");
+    }
+    setSaved((prev)=>!prev); 
+    try {
+      await apiRequest.post("/users/save",{postId:post.id});
+    } catch (error) {
+      console.log(error);
+      setSaved((prev)=>!prev);
+    }
+  };
   return (
     <div className="singlePage">
       <div className="details">
@@ -20,14 +40,21 @@ function SinglePage() {
                   <img src="/pin.png" alt="" />
                   <span>{post.address}</span>
                 </div>
-                <div className="price"><img src="rupee.png" className="rupee" alt="" /> {post.price}</div>
+                <div className="price">
+                  <img src="rupee.png" className="rupee" alt="" /> {post.price}
+                </div>
               </div>
               <div className="userInfo">
                 <img src={post.user.avatar} alt="" />
                 <span>{post.user.username}</span>
               </div>
             </div>
-            <div className="bottom" dangerouslySetInnerHTML={{__html:DOMpurify.sanitize(post.postDetail.desc)}}></div>
+            <div
+              className="bottom"
+              dangerouslySetInnerHTML={{
+                __html: DOMpurify.sanitize(post.postDetail.desc),
+              }}
+            ></div>
           </div>
         </div>
       </div>
@@ -39,26 +66,29 @@ function SinglePage() {
               <img src="/utility.png" alt="" />
               <div className="featureText">
                 <span>Utilities</span>
-                {
-                  post.postDetail.utilities ==="owner" ? (
-                    <p>Owner is responsible</p>):
-                    (<p>Tenant is responsible</p>)
-                  
-                }
+                {post.postDetail.utilities === "owner" ? (
+                  <p>Owner is responsible</p>
+                ) : (
+                  <p>Tenant is responsible</p>
+                )}
               </div>
             </div>
             <div className="feature">
               <img src="/pet.png" alt="" />
               <div className="featureText">
                 <span>Pet Policy</span>
-                {post.postDetail.pet==="allowed" ? <p>Pets allowed</p> : <p>Pets not allowed</p> }
+                {post.postDetail.pet === "allowed" ? (
+                  <p>Pets allowed</p>
+                ) : (
+                  <p>Pets not allowed</p>
+                )}
               </div>
             </div>
             <div className="feature">
               <img src="/fee.png" alt="" />
               <div className="featureText">
                 <span>Income Policy</span>
-                
+
                 <p>{post.postDetail.income}</p>
               </div>
             </div>
@@ -80,25 +110,40 @@ function SinglePage() {
           </div>
           <p className="title">Nearby Places</p>
           <div className="listHorizontal">
-          <div className="feature">
+            <div className="feature">
               <img src="/school.png" alt="" />
               <div className="featureText">
                 <span>School</span>
-                <p>{post.postDetail.school>999 ? post.postDetail.school/1000+"km":post.postDetail.school+"m"} away</p>
+                <p>
+                  {post.postDetail.school > 999
+                    ? post.postDetail.school / 1000 + "km"
+                    : post.postDetail.school + "m"}{" "}
+                  away
+                </p>
               </div>
             </div>
-          <div className="feature">
-              <img src="/bus.png" alt="" /> 
+            <div className="feature">
+              <img src="/bus.png" alt="" />
               <div className="featureText">
                 <span>Bus Stop</span>
-                <p>{post.postDetail.bus>999 ? post.postDetail.bus/1000+"km" : post.postDetail.school+"m"} away</p>
+                <p>
+                  {post.postDetail.bus > 999
+                    ? post.postDetail.bus / 1000 + "km"
+                    : post.postDetail.school + "m"}{" "}
+                  away
+                </p>
               </div>
             </div>
-          <div className="feature">
+            <div className="feature">
               <img src="/restaurant.png" alt="" />
               <div className="featureText">
                 <span>Restaurant</span>
-                <p>{post.postDetail.restaurant>999 ? post.postDetail.restaurant/1000+"km" : post.postDetail.bus+"m"} away</p>
+                <p>
+                  {post.postDetail.restaurant > 999
+                    ? post.postDetail.restaurant / 1000 + "km"
+                    : post.postDetail.bus + "m"}{" "}
+                  away
+                </p>
               </div>
             </div>
           </div>
@@ -111,9 +156,11 @@ function SinglePage() {
               <img src="/chat.png" alt="" />
               Send a Message
             </button>
-            <button>
+            <button onClick={handleSave} style={{
+              backgroundColor : saved ? "#fece51":"#fff"
+            }}>
               <img src="/save.png" alt="" />
-              Save the Place
+             {saved   ? "Place saved": "Save the Place"}
             </button>
           </div>
         </div>
