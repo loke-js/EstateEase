@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Suspense, useContext, useEffect } from "react";
 function Profile() {
   const data = useLoaderData();
+  console.log(data.chatResponse.data);
   const {updateUser,currentUser} = useContext(AuthContext);
   const navigate = useNavigate(); 
   const handleLogout = async ()=>{
@@ -56,7 +57,7 @@ function Profile() {
           </div>
           <Suspense fallback={ <p>Loading....</p> } >
           <Await
-          resolve = {data.postResponse}
+          resolve = {data.postResponse} 
           errorElement={<p>Error loading posts!</p>}
           >
             {(postResponse)=><List posts={postResponse.data.savedPosts}/>}
@@ -66,7 +67,14 @@ function Profile() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat/>
+        <Suspense fallback={ <p>Loading....</p> } >
+          <Await
+          resolve = {data.chatResponse} 
+          errorElement={<p>Error loading chats!</p>}
+          >
+           {(chatResponse) => <Chat chats={chatResponse.data}/>  }
+          </Await> 
+          </Suspense>
         </div>
       </div>
     </div>
