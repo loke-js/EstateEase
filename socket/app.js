@@ -8,7 +8,7 @@ const io = new Server({
   },
 });
 
-app.get('/', (req, res) => {
+io.get('/', (req, res) => {
   res.send('EstateEase Socket is running!');
 });
 
