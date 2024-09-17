@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiRequest= axios.create({
-    baseURL:"http://localhost:8800/api",
+    baseURL:"https://estateease-07ti.onrender.com/api",
     withCredentials:true,
 })
 
