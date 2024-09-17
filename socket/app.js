@@ -8,9 +8,7 @@ const io = new Server({
   },
 });
 
-io.get('/', (req, res) => {
-  res.send('EstateEase Socket is running!');
-});
+
 
 let onlineUser = [];
 
