@@ -4,15 +4,16 @@ import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import { format } from "timeago.js";
 import { SocketContext} from "../../context/SocketContext";
-// import { useNotificationStore } from "../../lib/notificationStore";
+import { useNotificationStore } from "../../lib/notificationStore";
 
-function Chat({ chats }) {
+function Chat({chats}) {
   const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
-
+ 
+  console.log(chat);
   const messageEndRef = useRef();
-
+  const decrease = useNotificationStore((state)=>state.decrease);
   
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -21,8 +22,10 @@ function Chat({ chats }) {
   const handleOpenChat = async (id, receiver) => {
     try {
       const res = await apiRequest("/chats/" + id);
-      
-      setChat({ ...res.data, receiver });
+      setChat({...res.data, receiver});
+      if(!res.data.seenBy.includes(currentUser.id)){
+        decrease();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -49,13 +52,13 @@ function Chat({ chats }) {
   useEffect(() => {
     const read = async () => {
       try {
-        await apiRequest.put("/chats/read/" + chat.id);
+        await apiRequest.put("/chats/read/"+chat.id);
       } catch (err) {
         console.log(err);
       }
     };
 
-    if (chat && socket) {
+    if (chat && socket){
       socket.on("getMessage", (data) => {
         if (chat.id === data.chatId) {
           setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
@@ -72,7 +75,7 @@ function Chat({ chats }) {
     <div className="chat">
       <div className="messages">
         <h1>Messages</h1>
-        {chats?.map((c) => (
+        { chats?.map((c) => (
           <div
             className="message"
             key={c.id}

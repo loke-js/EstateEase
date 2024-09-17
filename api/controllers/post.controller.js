@@ -30,11 +30,11 @@ export const getPost = async (req, res) => {
         id,
       },
       include: {
-        postDetail: true,
+        postDetail: true,  
         user: {
           select: {
-            username: true,
-            avatar: true,
+            username : true,
+            avatar : true,
           },
         },
       },

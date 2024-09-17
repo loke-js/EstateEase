@@ -7,28 +7,59 @@ import DOMpurify from "dompurify";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
+import Chat from "../../components/chat/Chat";
 function SinglePage() {
   const post = useLoaderData();
   console.log(post);
   const navigate = useNavigate();
-  const [saved,setSaved] =useState(post.isSaved);
+  const [saved, setSaved] = useState(post.isSaved);
   // console.log(post);
+  const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
-  const handleSave = async () => {
 
+  const handleChat = async () => {
+    try {
+      // Fetch existing chat
+      const chat = await apiRequest("/chats/chatonlist", {
+        params: { receiverId: post.userId },
+      });
+      console.log(chat.data.chat);
+      const receiver = await apiRequest("/users/",{
+        params:{id:post.userId}
+      })
+      //     // If no chat is found, create a new chat
+      if (chat) {
+        const chatId = chat.data.chat.id;
+        const res = await apiRequest("/chats/" +chatId);
+        setChat({ ...res.data,});
+      } else if (!chat) {
+        const res = await apiRequest.post("/chats/create",{
+          receiverId: post.userId,
+        });
+        const chatId = chat.data.chat.id;
+        const result = await apiRequest("/chats/"+chatId);
+       
+        setChat({ ...result.data,  });
+      }
+    } catch (error) {
+      console.error("Error handling chat:", error.message);
+    }
+  };
+  const handleSave = async () => {
     if (!currentUser) {
       navigate("/login");
     }
-    setSaved((prev)=>!prev); 
+    setSaved((prev) => !prev);
     try {
-      await apiRequest.post("/users/save",{postId:post.id});
+      await apiRequest.post("/users/save", { postId: post.id });
     } catch (error) {
       console.log(error);
-      setSaved((prev)=>!prev);
+      setSaved((prev) => !prev);
     }
   };
   return (
     <div className="singlePage">
+      {chat && <Chat chats={chat}  />}
       <div className="details">
         <div className="wrapper">
           <Slider images={post.images} />
@@ -152,15 +183,18 @@ function SinglePage() {
             <Map items={[post]} />
           </div>
           <div className="buttons">
-            <button>
+            <button onClick={handleChat}>
               <img src="/chat.png" alt="" />
               Send a Message
             </button>
-            <button onClick={handleSave} style={{
-              backgroundColor : saved ? "#fece51":"#fff"
-            }}>
+            <button
+              onClick={handleSave}
+              style={{
+                backgroundColor: saved ? "#fece51" : "#fff",
+              }}
+            >
               <img src="/save.png" alt="" />
-             {saved   ? "Place saved": "Save the Place"}
+              {saved ? "Place saved" : "Save the Place"}
             </button>
           </div>
         </div>
