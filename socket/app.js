@@ -8,6 +8,10 @@ const io = new Server({
   },
 });
 
+app.get('/', (req, res) => {
+  res.send('EstateEase Socket is running!');
+});
+
 let onlineUser = [];
 
 const addUser = (userId, socketId) => {
