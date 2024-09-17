@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const io = new Server({
   cors: {
-    origin:"http://localhost:5173",
+    origin:"https://estateease-1.onrender.com/",
   },
 });
 
