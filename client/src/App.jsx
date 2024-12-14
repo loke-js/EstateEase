@@ -9,6 +9,7 @@ import Login from "./routes/login/Login";
 import ProfileUpdatePage from "./routes/profileUpdate/ProfileUpdatePage";
 import NewPostPage from "./routes/newPostPage/NewPostPage";
 import { ListPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -42,7 +43,7 @@ function App() {
     },
     {
       path: "/",
-      element: <RequiredAuth />,
+      element: <RequiredAuth/>,
       children:[
         {
           path:"/profile",

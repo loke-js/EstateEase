@@ -8,6 +8,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import Chat from "../../components/chat/Chat";
+
 function SinglePage() {
   const post = useLoaderData();
   console.log(post);
@@ -21,7 +22,7 @@ function SinglePage() {
     try {
       // Fetch existing chat
       const chat = await apiRequest("/chats/chatonlist", {
-        params: { receiverId: post.userId },
+        params: { receiverId: post.userId},
       });
       console.log(chat.data.chat);
       const receiver = await apiRequest("/users/",{
@@ -94,7 +95,7 @@ function SinglePage() {
           <p className="title">General</p>
           <div className="listVertical">
             <div className="feature">
-              <img src="/utility.png" alt="" />
+              <img src="/utility.png" alt=""/>
               <div className="featureText">
                 <span>Utilities</span>
                 {post.postDetail.utilities === "owner" ? (
@@ -128,7 +129,7 @@ function SinglePage() {
           <div className="sizes">
             <div className="size">
               <img src="/size.png" alt="" />
-              <span>{post.postDetail.size} sqft</span>
+              <span>{post.po} sqft</span>
             </div>
             <div className="size">
               <img src="/bed.png" alt="" />

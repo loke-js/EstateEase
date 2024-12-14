@@ -19,6 +19,7 @@ model Post {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   price Int
+  size String
   images String[]
   address String
   city String
@@ -53,7 +54,7 @@ model PostDetail{
   utilities String?
   pet String?
   income String?
-  size Int?
+  size String?
   school Int?
   bus Int?
   restaurant Int?
@@ -68,7 +69,6 @@ model SavedPost {
   userId String   @db.ObjectId
   postId String   @db.ObjectId 
   createdAt DateTime @default(now())
-  
   @@unique([userId,postId])
 }
 
@@ -81,8 +81,15 @@ model User {
   createdAt DateTime @default(now())
   posts Post[]
   savedPosts SavedPost[]
-  chats Chat[] @relation(fields: [chatIDs],references: [id])
+  chats Chat[] @relation( fields: [chatIDs],references: [id] )
   chatIDs String[] @db.ObjectId
+}
+
+model Otp{
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique 
+  otp   String  @unique
+  expiresAt DateTime 
 }
 
 model Chat{
@@ -101,5 +108,4 @@ model Message{
   chat  Chat @relation(fields: [chatId],references: [id])
   chatId String @db.ObjectId 
   createdAt DateTime @default(now())
- 
 }

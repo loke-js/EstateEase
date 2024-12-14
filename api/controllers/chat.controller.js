@@ -74,12 +74,12 @@ export const addChat = async (req, res) => {
   const tokenUserId = req.userId;
   try {
     const newChat = await prisma.chat.create({
-      data: {
-        userIDs: [tokenUserId, req.body.receiverId],
+      data:{
+        userIDs: [tokenUserId , req.body.receiverId],
       },
     });
     res.status(200).json(newChat);
-  } catch (error) {
+  }catch (error){
     console.log(error);
     res.status(500).json({
       message: "Failed to get chats",
@@ -94,7 +94,7 @@ export const readChat = async (req, res) => {
       where: {
         id: req.params.id,
         userIDs: {
-          hasSome: [tokenUserId],
+          hasSome:[tokenUserId],
         },
       },
       data: {
